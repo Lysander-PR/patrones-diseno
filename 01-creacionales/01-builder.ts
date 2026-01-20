@@ -12,3 +12,87 @@
  *
  * https://refactoring.guru/es/design-patterns/builder
  */
+
+import { COLORS } from "../helpers/colors.ts";
+
+class Computer {
+  public cpu: string = 'cpu - not defined';
+  public ram: string = 'ram - not defined';
+  public storage: string = 'storage - not defined';
+  public gpu?: string = 'gpu - not defined';
+
+  public displayConfiguration (): void {
+    console.log(`Computer's settings
+      CPU: ${this.cpu}
+      ram: ${this.ram}
+      storage: ${this.storage}
+      GPU: ${this.gpu || 'No tiene GPU'}
+    `)
+  }
+}
+
+class ComputerBuilder {
+  private computer: Computer;
+
+  constructor() {
+    this.computer = new Computer()
+  }
+
+  setCPU (cpu: string): ComputerBuilder {
+    this.computer.cpu = cpu
+    return this;
+  }
+
+  setRAM (ram: string): ComputerBuilder {
+    this.computer.ram = ram
+    return this;
+  }
+
+  setStorage (storage: string): ComputerBuilder {
+    this.computer.storage = storage
+    return this;
+  }
+
+  setGPU (gpu: string): ComputerBuilder {
+    this.computer.gpu = gpu
+    return this;
+  }
+
+  build (): Computer {
+    return this.computer
+  }
+}
+
+function main () {
+  const basicComputer: Computer = new ComputerBuilder()
+    .setCPU('Intel Core i3')
+    .setRAM('4GB')
+    .setStorage('256GB')
+    .build()
+
+  const gamerComputer: Computer = new ComputerBuilder()
+    .setCPU('Intel Core i7')
+    .setGPU('GTX 4060')
+    .setStorage('1TB')
+    .setRAM('16GB')
+    .build()
+
+  const officeComputer: Computer = new ComputerBuilder()
+    .setCPU('Intel Core i5')
+    .setRAM('4GB')
+    .setRAM('8GB')
+    .setStorage('500GB')
+    .build()
+
+  console.log('%cBasic Computer', COLORS.blue)
+  basicComputer.displayConfiguration()
+
+  console.log('%cGamer Computer', COLORS.green)
+  gamerComputer.displayConfiguration()
+
+  console.log('%cOffice Computer', COLORS.orange)
+  officeComputer.displayConfiguration()
+}
+
+main()
+
