@@ -133,7 +133,7 @@ function main() {
     .limit(10)
     .execute();
 
-  console.log('%cConsulta:\n', COLORS.red);
+  console.log('%cConsulta:\n', COLORS.blue);
   console.log(usersQuery);
 }
 
